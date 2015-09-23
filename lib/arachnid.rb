@@ -26,7 +26,7 @@ class Arachnid
     filter = options[:filter]
 
     @hydra = Typhoeus::Hydra.new(:max_concurrency => threads)
-    @global_visited = BloomFilter::Native.new(:size => 1000000, :hashes => 5, :seed => 1, :bucket => 8, :raise => false)
+    @global_visited = BloomFilter::Redis.new(:size => 1000000, :hashes => 5, :seed => 1, :bucket => 8, :raise => false)
     @global_queue = []
 
     @global_queue.concat @start_urls
@@ -73,7 +73,7 @@ class Arachnid
             next if link.match(/^\(|^javascript:|^mailto:|^#|^\s*$|^about:/)
             begin
 
-              if internal_link?(link, response.effective_url) && 
+              if internal_link?(link, response.effective_url) &&
                 !@global_visited.include?(make_absolute(link, response.effective_url)) &&
                 no_hash_in_url?(link) &&
                 extension_not_ignored?(link)
@@ -142,5 +142,3 @@ class Arachnid
   end
 
 end
-
-
