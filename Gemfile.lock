@@ -1,0 +1,29 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    addressable (2.3.8)
+    bloomfilter-rb (2.1.1)
+      redis
+    domainatrix (0.0.11)
+      addressable
+    ethon (0.7.4)
+      ffi (>= 1.3.0)
+    ffi (1.9.10)
+    mini_portile (0.6.2)
+    nokogiri (1.6.6.2)
+      mini_portile (~> 0.6.0)
+    redis (3.2.1)
+    typhoeus (0.7.3)
+      ethon (>= 0.7.4)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  bloomfilter-rb
+  domainatrix
+  nokogiri
+  typhoeus
+
+BUNDLED WITH
+   1.10.6
