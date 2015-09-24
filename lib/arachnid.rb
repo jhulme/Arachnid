@@ -38,12 +38,12 @@ class Arachnid
       @global_queue.size.times do
         q = @global_queue.shift
 
-        puts "ARACHNID DEBUG - max_urls: #{max_urls}"
+        puts "ARACHNID DEBUG - max_urls: #{max_urls}" if @debug
         puts "ARACHNID DEBUG - global_visited: #{@global_visited.size}" if @debug
         puts "ARACHNID DEBUG - global_queue: #{@global_queue.size}" if @debug
 
         if !max_urls.nil? && @global_visited.size >= max_urls
-          puts "ARACHNID DEBUG - DONE! VISITED (#{@global_visited.size}) > MAX_URLS (#{max_urls})"
+          puts "ARACHNID DEBUG - DONE! VISITED (#{@global_visited.size}) > MAX_URLS (#{max_urls})" if @debug
           @global_queue = []
           break
         end
