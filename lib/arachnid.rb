@@ -107,7 +107,7 @@ class Arachnid
               puts "ARACHNID DEBUG - #{e.class}: Ignored link #{link} (#{e.message}) on page #{q}" if @debug
             end
           end
-          puts "ARACHNID DEBUG - @global_queue: #{@global_queue}"
+          puts "ARACHNID DEBUG - @global_queue: #{@global_queue}" if @debug
         end
 
         @hydra.queue request
