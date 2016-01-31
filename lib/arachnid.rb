@@ -82,7 +82,7 @@ class Arachnid
           # Note that this will match subdomains as well.
           next unless Arachnid.parse_domain(response.effective_url).include? @domain
 
-          #yield response
+          yield response
 
           # Parse the page and pull out internal links
           #@crawl_log << "ARACHNID page body: #{response.body}"
