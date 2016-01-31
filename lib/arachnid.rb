@@ -56,8 +56,7 @@ class Arachnid
         # Set default options
         options = {
           timeout: 10000,
-          follow_location:true,
-          timeout:100
+          follow_location:true
         }
 
         # Configure Proxy
