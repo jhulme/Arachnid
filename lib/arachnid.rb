@@ -53,13 +53,20 @@ class Arachnid
         puts "ARACHNID DEBUG - Processing link: #{q}" if @debug
         @global_visited.insert(q)
 
-        ip,port,user,pass = grab_proxy
+        # Set default options
+        options = {
+          timeout: 10000,
+          follow_location:true,
+          timeout:100
+        }
 
-        options = {timeout: 10000, followlocation:true}
+        # Configure Proxy
+        ip,port,user,pass = grab_proxy
         options[:proxy] = "#{ip}:#{port}" unless ip.nil?
         options[:proxy_username] = user unless user.nil?
         options[:proxy_password] = pass unless pass.nil?
 
+        # Configure cookie
         if @cookies_enabled
           cookie_file = Tempfile.new 'cookies'
           options[:cookiefile] = cookie_file
@@ -67,19 +74,17 @@ class Arachnid
         end
 
         request = Typhoeus::Request.new(q, options)
-
         request.on_complete do |response|
           next unless Arachnid.parse_domain(response.effective_url) == @domain
 
           yield response
 
+          # Parse the page and pull out internal links
           puts "ARACHNID DEBUG - page body: #{response.body}" if @debug
-
           puts "ARACHNID DEBUG - processing page links from #{response.effective_url}" if @debug
           elements = Nokogiri::HTML.parse(response.body).css('a')
           links = elements.map {|link| link.attribute('href').to_s}.uniq.sort.delete_if {|href| href.empty? }
           puts "ARACHNID DEBUG - links: #{links}" if @debug
-
           links.each do |link|
             next if link.match(/^\(|^javascript:|^mailto:|^#|^\s*$|^about:/)
             begin
@@ -103,6 +108,7 @@ class Arachnid
                   @global_queue << absolute_link
                 end
               end
+
             rescue Addressable::URI::InvalidURIError => e
               puts "ARACHNID DEBUG - #{e.class}: Ignored link #{link} (#{e.message}) on page #{q}" if @debug
             end
