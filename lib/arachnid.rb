@@ -11,7 +11,7 @@ class Arachnid
 
   attr_accessor :crawl_log
 
-  def initialize(urls, options = {}, log_stream)
+  def initialize(urls, options = {})
     @start_urls = urls.is_a?(Array) ? urls : [urls]
     @domain = Arachnid.parse_domain(@start_urls[0])
     @split_url_at_hash = options[:split_url_at_hash]
