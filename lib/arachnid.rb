@@ -136,7 +136,7 @@ class Arachnid
   end
 
   def self.parse_domain(url)
-    parsed_domain = Domainatrix.parse(url)
+    parsed_domain = Domainatrix.parse(url.to_s)
 
     if(parsed_domain.subdomain != "")
       parsed_domain.subdomain + '.' + parsed_domain.domain + '.' + parsed_domain.public_suffix
